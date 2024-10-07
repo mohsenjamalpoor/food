@@ -1,0 +1,196 @@
+"use client"
+import axios from 'axios'
+import { json } from 'stream/consumers'
+import Link from 'next/link';
+import api from '@/services/Axios/config';
+import {
+  UseQueryResult,
+  useQuery,
+  useMutation,
+  UseQueryOptions,
+  QueryClient,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { title } from 'process';
+
+
+export default  function Posts() {
+  const qureyClient = useQueryClient()
+  
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [posts , setPosts] = useState([])
+  
+
+  // const filterPosts = (id : number)=>{
+  
+  //   //@ts-ignore
+  //    setPosts(posts.filter(item => item.id !== id))
+     
+  
+  // }
+
+
+  const getUsers =async()=>{
+    console.log('====================================');
+    console.log();
+    console.log('====================================');
+    const res =await api.get('/posts?_limit=10')
+    const data =  res.data;
+    setPosts(data)
+    return data
+  }
+  //@ts-ignore
+  const { isPending, isError, error, data  } = useQuery({
+    queryKey : ['posts'],
+    queryFn : getUsers,
+    gcTime:10000,
+    staleTime:5000,
+    enabled:true,
+  
+
+  
+  }
+    
+  
+);
+   if (isPending) {
+     return <div>Loading..</div>
+   }
+  
+   useEffect(()=>{
+     console.log('isLoading',isPending);
+     // setUsers(data)
+   },[JSON.stringify(data)])
+  
+  if (isError) {
+     return <div>Errror, {error.message}</div>
+   }
+
+ 
+
+
+  
+
+  
+  //  }
+  const mutation = useMutation({
+    //@ts-ignore
+    mutationFn:(newPost) => 
+   axios.post("https://jsonplaceholder.typicode.com/posts", newPost),
+});
+//@ts-ignore
+  const submitData = (event) => {
+     event.preventDefault();
+  
+    console.log({title, body} )
+    //@ts-ignore
+    mutation.mutate({title, body });
+  };
+
+
+
+const deleteMutation = useMutation({
+  //@ts-ignore
+  mutationFn:(id) => 
+ axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`),
+ 
+
+  
+},);
+
+ // @ts-ignore 
+  const handlerDelete = (id) => {
+    // const filterPosts = (id : number)=>{
+  
+    //   //@ts-ignore
+    //    setPosts(posts.filter(item => item.id !== id))
+       
+    
+    // }
+    // // @ts-ignore
+    // filterPosts(id)
+     deleteMutation.mutate(id) 
+
+  };
+
+
+  return (
+    <div>
+      <h1 className='text-red-600 font-bold'>
+        Posts
+      </h1>
+      
+      <ul>
+        {posts?.map((post:any) => (
+          <>
+          <li key={post.id}>{post.title}
+
+          <button className='pl-5 text-red-700 font-bold' onClick={() =>handlerDelete(post.id)}>Remove</button>
+          </li>
+
+          </>
+          
+        ))}
+      </ul>
+
+
+      <div>
+      {mutation.isPending ? (
+        'Adding todo...'
+      ) : (
+        <>
+          {mutation.isError ? (
+            <div>An error occurred: {mutation.error.message}</div>
+          ) : null}
+
+          {mutation.isSuccess ? <div>Todo added!</div> : null}
+
+         
+        </>
+      )}
+      <input
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Title"
+      />
+      <input
+        type="text"
+        value={body}
+        onChange={(e) => setBody(e.target.value)}
+        placeholder="Body"
+      />
+      
+      <button onClick={submitData}>Add post</button>
+    
+    </div>
+      
+{/* 
+   <div>
+       {deleteMutation.isPending ? (
+        'Adding todo...'
+      ) : (
+        <>
+          {deleteMutation.isError ? (
+            <div>An error occurred: {deleteMutation.error.message}</div>
+          ) : null}
+
+          {deleteMutation.isSuccess ? <div>Todo added!</div> : null}
+
+         
+        </>
+      )}
+       
+      
+       </div> */}
+
+    
+  
+    
+      
+      
+    </div>
+  )
+}
