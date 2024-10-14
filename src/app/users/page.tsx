@@ -25,10 +25,7 @@ const { isLoading, isError, error, data } = useQuery({
   queryFn : getUsers
 });
 
-useEffect(()=>{
-  console.log('isLoading',isLoading);
-  // setUsers(data)
-},[JSON.stringify(data)])
+
 
 if (isLoading) {
   return <div>Loading..</div>
