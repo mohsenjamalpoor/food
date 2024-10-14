@@ -59,10 +59,7 @@ export default  function Posts() {
      return <div>Loading..</div>
    }
   
-   useEffect(()=>{
-     console.log('isLoading',isPending);
-     // setUsers(data)
-   },[JSON.stringify(data)])
+
   
   if (isError) {
      return <div>Errror, {error.message}</div>
