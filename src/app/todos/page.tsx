@@ -31,7 +31,7 @@ const { isLoading, isError, error, data } = useQuery({
 });
 
 useEffect(()=>{
-  console.log('isLoading',isLoading);
+  
   // setUsers(data)
 },[JSON.stringify(data)])
 
