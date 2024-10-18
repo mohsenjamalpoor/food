@@ -16,7 +16,7 @@ import { title } from 'process';
 
 
 export default  function Posts() {
-  // const qureyClient = useQueryClient()
+   const qureyClient = useQueryClient()
   
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
