@@ -50,11 +50,27 @@ export default  function Posts() {
     enabled:true,
   
 
-  
-  }
     
+  }
+  
   
 );
+const deleteMutation = useMutation({
+  //@ts-ignore
+  mutationFn:(id) => 
+ axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`),
+ 
+
+  
+});
+
+const mutation = useMutation({
+  //@ts-ignore
+  mutationFn:(newPost) => 
+ axios.post("https://jsonplaceholder.typicode.com/posts", newPost),
+});
+
+
    if (isPending) {
      return <div>Loading..</div>
    }
@@ -72,11 +88,6 @@ export default  function Posts() {
 
   
   
-  const mutation = useMutation({
-    //@ts-ignore
-    mutationFn:(newPost) => 
-   axios.post("https://jsonplaceholder.typicode.com/posts", newPost),
-});
 //@ts-ignore
   const submitData = (event) => {
      event.preventDefault();
@@ -89,14 +100,6 @@ export default  function Posts() {
 
 
 
-  const deleteMutation = useMutation({
-    //@ts-ignore
-    mutationFn:(id) => 
-   axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`),
-   
-  
-    
-  });
   
    // @ts-ignore 
     const handlerDelete = (id) => {
