@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useMemo, useState } from 'react'
-import Axios from 'axios'
+import axios from 'axios'
 import { json } from 'stream/consumers'
 import {
   UseQueryResult,
@@ -15,7 +15,7 @@ const getUsers =async()=>{
   console.log('====================================');
   console.log();
   console.log('====================================');
-  const res =await Axios.get('https://jsonplaceholder.typicode.com/users?_limit=10')
+  const res =await axios.get('https://jsonplaceholder.typicode.com/users?_limit=10')
   const data =  res.data;
   return data
 }
@@ -33,14 +33,17 @@ if (isLoading) {
 if (isError) {
    return <div>Errror, {error.message}</div>
  }
-   
+  //@ts-ignore
+
   return (
     <div>
       <h1 className='pb-2 text-red-600 font-bold'>
         Users
       </h1>
       <ul>
-        {data?.map((user:any) => <li key={user.id}>{user.name}</li>)}
+        {data?.map((user:any) => <li key={user.id}>{user.name}
+       
+        </li>)}
       </ul>
     </div>
   )

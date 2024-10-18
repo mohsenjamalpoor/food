@@ -11,12 +11,12 @@ import {
   QueryClient,
   useQueryClient,
 } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react/";
 import { title } from 'process';
 
 
 export default  function Posts() {
-  const qureyClient = useQueryClient()
+  // const qureyClient = useQueryClient()
   
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -62,7 +62,7 @@ export default  function Posts() {
 
   
   if (isError) {
-     return <div>Errror, {error.message}</div>
+     return <div>Error, {error.message}</div>
    }
 
  
@@ -71,7 +71,7 @@ export default  function Posts() {
   
 
   
-  //  }
+  
   const mutation = useMutation({
     //@ts-ignore
     mutationFn:(newPost) => 
@@ -88,29 +88,30 @@ export default  function Posts() {
 
 
 
-const deleteMutation = useMutation({
-  //@ts-ignore
-  mutationFn:(id) => 
- axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`),
- 
 
+  const deleteMutation = useMutation({
+    //@ts-ignore
+    mutationFn:(id) => 
+   axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`),
+   
   
-},);
-
- // @ts-ignore 
-  const handlerDelete = (id) => {
-    // const filterPosts = (id : number)=>{
-  
-    //   //@ts-ignore
-    //    setPosts(posts.filter(item => item.id !== id))
-       
     
-    // }
-    // // @ts-ignore
-    // filterPosts(id)
-     deleteMutation.mutate(id) 
-
-  };
+  });
+  
+   // @ts-ignore 
+    const handlerDelete = (id) => {
+      // const filterPosts = (id : number)=>{
+    
+      //   //@ts-ignore
+      //    setPosts(posts.filter(item => item.id !== id))
+         
+      
+      // }
+      // // @ts-ignore
+      // filterPosts(id)
+       deleteMutation.mutate(id) 
+  
+    };
 
 
   return (
@@ -164,28 +165,8 @@ const deleteMutation = useMutation({
     
     </div>
       
-{/* 
-   <div>
-       {deleteMutation.isPending ? (
-        'Adding todo...'
-      ) : (
-        <>
-          {deleteMutation.isError ? (
-            <div>An error occurred: {deleteMutation.error.message}</div>
-          ) : null}
 
-          {deleteMutation.isSuccess ? <div>Todo added!</div> : null}
 
-         
-        </>
-      )}
-       
-      
-       </div> */}
-
-    
-  
-    
       
       
     </div>
