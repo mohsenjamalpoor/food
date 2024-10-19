@@ -103,22 +103,22 @@ const mutation = useMutation({
   
    // @ts-ignore 
     const handlerDelete = (id) => {
-      // const filterPosts = (id : number)=>{
+      const filterPosts = (id : number)=>{
     
-      //   //@ts-ignore
-      //    setPosts(posts.filter(item => item.id !== id))
+       //@ts-ignore
+       setPosts(posts.filter(item => item.id !== id))
          
       
-      // }
-      // // @ts-ignore
-      // filterPosts(id)
+      }
+      // @ts-ignore
+       filterPosts(id)
        deleteMutation.mutate(id) 
   
     };
 
 
   return (
-    <div>
+    <div className="flex flex-col ">
       <h1 className='text-red-600 font-bold'>
         Posts
       </h1>
@@ -151,20 +151,23 @@ const mutation = useMutation({
          
         </>
       )}
-      <input
+      <div>
+
+      <input className="border-2 border-solid border-black mr-4"
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Title"
-      />
-      <input
+        />
+      <input className="border-2 border-solid border-black mr-4"
         type="text"
         value={body}
         onChange={(e) => setBody(e.target.value)}
         placeholder="Body"
-      />
+        />
       
       <button onClick={submitData}>Add post</button>
+        </div>
     
     </div>
       
